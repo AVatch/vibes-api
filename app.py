@@ -4,6 +4,7 @@ load_dotenv()
 import os
 
 from flask import Flask, json
+from flask_cors import CORS
 
 from twilio.jwt.access_token import AccessToken
 from twilio.jwt.access_token.grants import VideoGrant
@@ -15,6 +16,7 @@ api_key = os.getenv("TWILIO_API_KEY")
 api_secret = os.getenv("TWILIO_API_SECRET")
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/grant/*": {"origins": "*"}})
 
 @app.route('/grant/<identity>')
 def get_grant(identity):
