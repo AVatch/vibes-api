@@ -15,15 +15,15 @@ account_sid = os.getenv("TWILIO_ACCOUNT_SID")
 api_key = os.getenv("TWILIO_API_KEY")
 api_secret = os.getenv("TWILIO_API_SECRET")
 
-app = Flask(__name__)
-cors = CORS(app, resources={r"/grant/*": {"origins": "*"}})
+application = Flask(__name__)
+cors = CORS(application, resources={r"/grant/*": {"origins": "*"}})
 
-@app.route('/grant/<identity>')
+@application.route('/grant/<identity>')
 def get_grant(identity):
     """A stupid endpoint to grant access_tokens
     """
     if not identity:
-        response = app.response_class(
+        response = application.response_class(
             response=json.dumps({  }),
             status=400,
             mimetype='application/json'
@@ -40,7 +40,7 @@ def get_grant(identity):
     # Return token info as JSON
     jwt = token.to_jwt()
 
-    response = app.response_class(
+    response = application.response_class(
         response=json.dumps({ 'token': jwt.decode("utf-8") }),
         status=200,
         mimetype='application/json'
@@ -49,5 +49,5 @@ def get_grant(identity):
 
 
 if __name__ == "__main__":
-    app.debug = False
-    app.run()
+    application.debug = False
+    application.run()
