@@ -46,3 +46,8 @@ def get_grant(identity):
         mimetype='application/json'
     )
     return response
+
+
+if __name__ == "__main__":
+    app.debug = False
+    app.run()
